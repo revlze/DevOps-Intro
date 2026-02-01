@@ -6,12 +6,13 @@
 
 ## Proofs
 
-<img height="500" alt="Proof_1" src="../images/screenshots/screenshot1.png" />
+<img height="500" alt="Proof_1" src="../images/screenshots/screenshot1.png">
 
 ```
 platon@arch ~> ls .ssh/id_*
 .ssh/id_ed25519  .ssh/id_ed25519.pub
 ```
+<img alt="Proof_2" src="../images/screenshots/screenshot2.png">
 
 
 ## Why is commit signing important in DevOps workflows?
