@@ -56,3 +56,78 @@ The workflow was triggered by a `push` event — I committed and pushed the work
    - Reported the final job status as `success`.
 4. The entire workflow completed in ~6 seconds.
 
+---
+
+## Task 2
+
+### Task 2.1
+
+Added `workflow_dispatch` trigger to the workflow file to enable manual runs:
+
+```yaml
+on: [push, workflow_dispatch]
+```
+
+### Task 2.2
+
+**Manual dispatch run link:** [GitHub Actions Demo — Run #22032552231](https://github.com/revlze/DevOps-Intro/actions/runs/22032552231)
+
+The workflow was triggered manually via the Actions tab using the "Run workflow" button.
+
+**Manual vs automatic triggers comparison:**
+
+| Aspect | `push` trigger | `workflow_dispatch` trigger |
+|--------|---------------|----------------------------|
+| How it starts | Automatically on every push | Manually via Actions tab |
+| Use case | CI on every code change | On-demand runs, debugging, deployments |
+| `github.event_name` | `push` | `workflow_dispatch` |
+| Branch selection | Determined by the push | Selected manually in the UI |
+
+### Task 2.3
+
+Added a "Gather system information" step to the workflow:
+
+```yaml
+- name: Gather system information
+  run: |
+    uname -a
+    nproc
+    free -h
+    df -h
+    cat /proc/cpuinfo | head -20
+```
+
+**System information output from runner:**
+
+```
+Linux runnervmjduv7 6.14.0-1017-azure #17~24.04.1-Ubuntu SMP Mon Dec  1 20:10:50 UTC 2025 x86_64 GNU/Linux
+4
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       799Mi        13Gi        38Mi       1.8Gi        14Gi
+Swap:          3.0Gi          0B       3.0Gi
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       145G   53G   92G  37% /
+tmpfs           7.9G   84K  7.9G   1% /dev/shm
+```
+
+**CPU info:**
+
+```
+vendor_id  : AuthenticAMD
+model name : AMD EPYC 7763 64-Core Processor
+cpu MHz    : 3246.381
+cache size : 512 KB
+cpu cores  : 2
+siblings   : 4
+```
+
+**Runner environment analysis:**
+
+- **OS:** Ubuntu 24.04.3 LTS running on Azure (kernel 6.14.0-1017-azure)
+- **CPU:** AMD EPYC 7763, 4 vCPUs (2 physical cores with SMT), ~3.2 GHz
+- **RAM:** 16 GB total, ~14 GB available
+- **Disk:** 145 GB root partition, 92 GB free
+- **Runner version:** 2.331.0
+- **Region:** Azure East US
+
+The GitHub-hosted runner provides a fairly powerful VM — enough for most CI tasks like building, testing, and deploying typical projects.
